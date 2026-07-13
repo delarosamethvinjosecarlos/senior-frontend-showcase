@@ -3,8 +3,11 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import App from './App.tsx';
 import { GlobalErrorFallback } from './ui/components/GlobalErrorFallback';
+
+import App from './App.tsx';
+
+import './index.css';
 
 async function enableMocking() {
   const { worker } = await import('./infra/msw/browser');

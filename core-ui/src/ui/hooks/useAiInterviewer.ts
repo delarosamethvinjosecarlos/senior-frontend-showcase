@@ -24,8 +24,12 @@ export function useAiInterviewer() {
         try {
             const result = await useCase.execute();
             setQuestions(result);
-        } catch (err: any) {
-            setError(err.message || "Error desconocido al generar preguntas");
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("Error desconocido al generar preguntas");
+            }
         } finally {
             setIsGenerating(false);
         }
