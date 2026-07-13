@@ -16,11 +16,9 @@ export function useArchitectureSimulator() {
     const loadData = async () => {
         setIsLoading(true);
         try {
-            // 1. Pedimos las features al repositorio (que por debajo usa fetch y lo intercepta MSW)
             const fetchedFeatures = await repository.getFeatures();
             setFeatures(fetchedFeatures);
 
-            // 2. Ejecutamos la regla de negocio para calcular el porcentaje
             const currentScore = await calculateScoreUseCase.execute();
             setScore(currentScore);
         } catch (error) {
@@ -30,16 +28,13 @@ export function useArchitectureSimulator() {
         }
     };
 
-    // Cargamos los datos iniciales al montar el hook
     useEffect(() => {
         loadData();
     }, []);
 
     const toggleFeature = async (id: string, currentState: boolean) => {
         try {
-            // Enviamos la petición de cambio de estado a la API
             await repository.toggleFeature(id, !currentState);
-            // Recargamos los datos para tener la fuente de la verdad sincronizada
             await loadData();
         } catch (error) {
             console.error("Error al actualizar la característica:", error);

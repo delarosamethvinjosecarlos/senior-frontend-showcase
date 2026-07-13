@@ -10,7 +10,6 @@ export interface ArchitectureFeature {
     isActive: boolean;
 }
 
-// Muestra errores específicos del dominio
 export class FeatureNotFoundError extends Error {
     constructor(id: string) {
         super(`La característica con ID ${id} no se encontró en el sistema.`);
