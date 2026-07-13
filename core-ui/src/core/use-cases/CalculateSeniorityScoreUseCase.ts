@@ -1,17 +1,8 @@
 // core-ui/src/core/use-cases/CalculateSeniorityScoreUseCase.ts
-
-import type { ArchitectureRepository } from '../domain/ArchitectureRepository';
+import type { ArchitectureFeature } from '../domain/ArchitectureFeature';
 
 export class CalculateSeniorityScoreUseCase {
-    private repository: ArchitectureRepository;
-
-    constructor(repository: ArchitectureRepository) {
-        this.repository = repository;
-    }
-
-    async execute(): Promise<number> {
-        const features = await this.repository.getFeatures();
-
+    execute(features: ArchitectureFeature[]): number {
         const totalScore = features.reduce((acc, feature) => {
             return feature.isActive ? acc + feature.seniorityImpact : acc;
         }, 0);

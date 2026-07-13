@@ -11,7 +11,7 @@ export function useArchitectureSimulator() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const repository = useMemo(() => new ApiArchitectureRepository(), []);
-    const calculateScoreUseCase = useMemo(() => new CalculateSeniorityScoreUseCase(repository), [repository]);
+    const calculateScoreUseCase = useMemo(() => new CalculateSeniorityScoreUseCase(), []);
 
     const loadData = async () => {
         setIsLoading(true);
@@ -19,7 +19,7 @@ export function useArchitectureSimulator() {
             const fetchedFeatures = await repository.getFeatures();
             setFeatures(fetchedFeatures);
 
-            const currentScore = await calculateScoreUseCase.execute();
+            const currentScore = calculateScoreUseCase.execute(fetchedFeatures);
             setScore(currentScore);
         } catch (error) {
             console.error("Error cargando los datos del simulador:", error);
